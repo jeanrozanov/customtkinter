@@ -1,16 +1,4 @@
-from cProfile import label
-
 import customtkinter as ctk
-
-
-def handle_button_press():
-    global root, entry
-    text = entry.get()
-    print(f"Текст, введенный в поле: {text}")
-    entry.delete(0, 'end')
-
-    entry._activate_placeholder()
-    root.focus_set()
 
 
 ctk.set_appearance_mode("dark")
@@ -20,13 +8,14 @@ root = ctk.CTk()
 root.title("Задание №1")
 root.geometry("500x500")
 my_font = ctk.CTkFont(size=20)
+name = None
+def handle_button_press():  # хендлер для кнопки - не должен принимать никаких аргументов
+    # хендлер срабатывает при нажатии на кнопку, то есть это событийно-ориентированное программирование
+    global button, cnt, flag_color, name  # связываемся с глобальными переменными
+    name = entry.get()
+    entry.delete(0, 'end')
+    label.configure(text=f"Привет, {name}!")
 
-label = ctk.CTkLabel(master=root)
-label.configure(
-    text="Привет, Аноним!",
-    font=my_font,
-    text_color='white'
-)
 
 entry = ctk.CTkEntry(master=root)
 entry.configure(
@@ -36,11 +25,24 @@ entry.configure(
     width=250  # ширина виджета в пикселях
 )
 
-button = ctk.CTkButton(master=root, text="Готово", font=my_font, command=handle_button_press)
+label = ctk.CTkLabel(master=root)
+label.configure(
+    text= f"Привет, Аноним!",
+    font=my_font,
+    text_color='white'
+)
 
-entry.pack(pady=100)
-button.pack(pady=100)
-label.pack(pady=100)
+
+button = ctk.CTkButton(master=root, text="Готово", font=my_font)
+
+button.configure(command=handle_button_press)
+
+cnt = 0  # счётчик числа нажатий на кнопку
+flag_color = "white"
+
+label.pack(pady=70)
+entry.pack(pady=60)
+button.pack(pady=40)
 
 
 root.mainloop()
