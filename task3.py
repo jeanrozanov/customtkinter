@@ -19,10 +19,12 @@ def handle_button_press():  # хендлер для кнопки - не долж
         entry1.configure(text_color='yellow')
 
     word = combobox.get()
-    if var_checkbox_1:
-        entry1.insert(0, word + '!')
-    else:
-        entry1.insert(0, word + '?')
+    if var_checkbox_1.get():
+        word = word + '!'
+        entry1.insert(0, word)
+    if var_checkbox_2.get():
+        word = word + '?'
+        entry1.insert(0, word)
     entry1.configure(state="normal")  # разблокируем поле
     entry1.delete(0, "end")  # удалим оттуда старую строчку
     entry1.insert(0, word)  # вставим новую
@@ -40,12 +42,8 @@ combobox.configure(
 )
 combobox.set("Выберите фразу:")  # значение элемента по умолчанию
 
-# взаимодействие с ComboBox:
 
-
-var_checkbox_1 = ctk.BooleanVar()  # первый флажок будет привязан к первой переменной
-# она имеет тип bool, то есть может принимать всего два значения: True или False; это логично, потому что флажок тоже
-# может принимать всего два состояния: активен или не активен; свяжем состояние "активен" с True, "не активен" - с False
+var_checkbox_1 = ctk.BooleanVar()
 
 checkbox_1 = ctk.CTkCheckBox(
     master=root,
@@ -68,8 +66,8 @@ var_checkbox_2.get()
 
 var_radiobuttons_1 = ctk.IntVar()  # переключатели будут привязаны к одной переменной типа int, образуя связанную группу
 
-
 radiobutton_1 = ctk.CTkRadioButton(
+
     master=root,
     variable=var_radiobuttons_1,  # привязываем переключатель к переменной
     value=1  # значение данного переключателя
